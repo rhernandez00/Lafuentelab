@@ -1,4 +1,4 @@
-function [copiae,angulos] = rasterB(e, neuron, alinearcon, desplazamiento, graficar, rangoMin, rangoMax)
+function [copiae,angulos] = raster(e, neuron, alinearcon, desplazamiento, graficar, rangoMin, rangoMax)
 %graficar indica si quieres que haga el raster o no
 if nargin < 5
     rangoMin = 5;
@@ -64,15 +64,6 @@ for i = 1:ensayofinal %este for alinea cada ensayo utilizando inicio
         %pause()
     end
 end
-
-% [B,I] = sort(angulos); %sort es una funcion que ordena de menor a mayor los valores de un vector dado, en este caso ocupa angulos que contiene todos los angulos de rotación
-% %B es el vector con los datos ordenados que te regresa sort
-% %I es el vector con los indices (ubicacion) en los que fue ordenado B
-% eordenado = copiae; %eordenado contiene la misma informacion que copia e 
-% for j = 1:length(I) %este for va de 1 hasta el final de I y se usa para la alineacion de la informacion de los datos del raster en orden de menor a mayor angulo de rotacion
-%     eordenado.trial(j) = copiae.trial(I(j)); %el resto de los valores contenidos en copiae son ordenados de acuerdo al orden contenido en I
-% end
-% copiae = eordenado; %para no reemplazar nada en el script original de rasterM, se asigna el contenido de eordenado en copieae.
 
 
 
