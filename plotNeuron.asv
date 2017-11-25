@@ -34,7 +34,7 @@ e = alignE(e,alignEvent); %alinea e de acuerdo a un evento particular
 hold on
 for k = 1:length(varsToKeep)%separa los eventos utilizando las variables a mantener
     varsToKeepTmp = varsToKeep(k);
-    [eNeg] = filterBy(e,filterVar,varsToKeepTmp,false);
+    [eNeg,] = filterBy(e,filterVar,varsToKeepTmp,false);
     [rates] = getRates(eNeg,timeBefore,timeAfter,windowJump); %gets the firing rates for each neuron around the alignment event
     timeVector = -1*timeBefore:windowJump:timeAfter;
     ratesNeg = meanRate(rates,neuron);
