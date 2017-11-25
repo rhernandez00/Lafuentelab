@@ -40,4 +40,3 @@ for k = 1:length(varsToKeep)%separa los eventos utilizando las variables a mante
     ratesNeg = meanRate(rates,neuron);
     plot(timeVector,ratesNeg, 'Linewidth', linewidth, 'Color', colors{k}) 
 end
-
