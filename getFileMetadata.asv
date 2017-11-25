@@ -1,5 +1,8 @@
 function tbl = getFileMetadata(fileName,folder)
-% gets metadata from a file and gives it back as a table. One row for each neuron
+
+% clear
+% fileName = 'c1608041052.mat';
+% folder = 'C:\Users\Raul\Desktop\registros\recordings\';
 
 load([folder,fileName]); %loads e
 neuron = fields(e.spikes); %gets the available neurons
@@ -31,7 +34,7 @@ profundidadZ = e.electrodos.profundidad(3) * ones(length(neuron),1);
 nTrials = length(e.trial)* ones(length(neuron),1);
 
 
-%assigns the data to a table
+%assigns 
 tbl = table(dateRegistered,neuron,coordenadaX,coordenadaY,coordenadaZ,...
     contacto,cortezaX,cortezaY,cortezaZ,...
     orientacion,profundidadX,profundidadY,profundidadZ,...
