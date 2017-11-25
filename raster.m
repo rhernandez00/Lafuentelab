@@ -8,12 +8,6 @@ elseif nargin < 6
     rangoMin = 5;
     rangoMax = 5;
 end
-%BLOQUE PARA CARGAR ARCHIVO
-%e.trial(1:100).waitCueIni 
-% e          - estructura
-% trial      - otra estructura dentro de e
-% (1:100)    - se refiere a los ensayos que quieras utilizar
-% waitCueIni - el campo al que quieres referenciar
 %%
 %BLOQUE PARA CREAR LA MATRIZ DE COLORES QUE USARA EL RASTER
 
@@ -32,7 +26,6 @@ end
 %%
 %BLOQUE QUE GENERA EL RASTER
 
-%alinearcon = 'targOn';%variable con la que se quiera alinear el raster
 ensayofinal = length([e.trial.waitCueIni]); %elegimos el ensayo final a graficar
 letra = 20; %tamaño de la fuente de la letra en el plot
 ancholinea = 2;
@@ -40,36 +33,26 @@ anchoSpike = 1;
 
 
 
-copiae = e; %creamos una copia de e y borramos los campos innecesarios con rmfield
+copiae = e; %creamos una copia de e
 angulos = [copiae.trial.anguloRotacion];
 campos = {'anguloInicio','anguloRotacion','velocidad','tiempo','tiempoMedido','categoria','anguloTarg','respuesta','correcto','digitalInfo','timeStamp','robSignal','robTimeSec'};
-copiae.trial = rmfield(copiae.trial,campos);
+copiae.trial = rmfield(copiae.trial,campos); % borramos los campos innecesarios con rmfield
 campos = fieldnames(copiae.trial); %En la variable campos guardamos los nombres de todo los campos que existen en copiae.trial
 
 
 possibleNeurons = fields(e.spikes);%;fields(copiae.spikes);
 inicio = [copiae.trial.(alinearcon)]; %creamos una copia de lo que vayamos a usar PARA alinear
-for i = 1:ensayofinal %este for alinea cada ensayo utilizando inicio
+for ensayo = 1:ensayofinal %este for alinea cada ensayo utilizando inicio
     for k = 1:length(possibleNeurons)
-        copiae.spikes(i).(possibleNeurons{k}) = copiae.spikes(i).(possibleNeurons{k}) - inicio(i);
+        copiae.spikes(ensayo).(possibleNeurons{k}) = copiae.spikes(ensayo).(possibleNeurons{k}) - inicio(ensayo);
     end
-%     try
-%         copiae.spikes(i).spike11 = copiae.spikes(i).spike11 - inicio(i);
-%     catch
-%         i
-%         pause()
-%     end
+
     for j = 1:size(campos,1)%este for alinea cada campo del ensayo
-        copiae.trial(i).(campos{j}) = copiae.trial(i).(campos{j}) - inicio(i) + desplazamiento;%a waitCueIni lo alineamos usando inicio 
-        %pause()
+        copiae.trial(ensayo).(campos{j}) = copiae.trial(ensayo).(campos{j}) - inicio(ensayo) + desplazamiento;%a waitCueIni lo alineamos usando inicio 
     end
 end
 
-
-
-tiempomaximo = max([copiae.trial(1:ensayofinal).targOff]); %el tiempo en segundos maximo que puede durar un ensayo
 tiempomaximo = desplazamiento + rangoMax; %el tiempo en segundos maximo que puede durar un ensayo
-tiempominimo = min([copiae.trial(1:ensayofinal).waitCueIni]);%el tiempo en segundos minimi que puede durar un ensayo
 tiempominimo = desplazamiento - rangoMin;%el tiempo en segundos minimi que puede durar un ensayo
 %Grafica cada evento por separado
 %rasterplotV, es la función que convierte puntos en rayitas

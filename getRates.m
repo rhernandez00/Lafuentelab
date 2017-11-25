@@ -1,4 +1,6 @@
 function [rates,possibleNeurons] = getRates(e,timeBefore,timeAfter,windowJump)
+%calcula la tasa de disparo de las neuronas disponibles para cada ensayo y
+%lo devuelve como rates
 if nargin < 2
     timeBefore = 2;
     timeAfter = 2;
@@ -29,11 +31,7 @@ for i = 1:length(possibleNeurons)
     for j = 1:length(e.trial)
         trial = j;
         neuron = [e.spikes(trial).(possibleNeurons{i})];
-        %size(neuron)
-        
-%         timeSamples = min([e.spikes.(possibleNeurons{i})]):ventana:max([e.spikes.(possibleNeurons{i})]);
         rate = firingrate(neuron, timeSamples, 'TimeConstant', timeConstant, 'FilterType', 'exponential');
-        
         rates.(possibleNeurons{i})(trial).rate = rate;
     end
 end
