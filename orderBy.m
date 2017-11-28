@@ -1,4 +1,4 @@
-function [eOut,y] = orderBy(e,orderVar)
+function [eOut] = orderBy(e,orderVar)
 
 vals = [e.trial.(orderVar)]; %vals = round(vals.*10)/10;
 [~,I] = sort(vals);
