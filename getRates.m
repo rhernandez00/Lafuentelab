@@ -1,12 +1,16 @@
-function [rates,possibleNeurons] = getRates(e,timeBefore,timeAfter,windowJump)
+function [rates,possibleNeurons] = getRates(e,timeBefore,timeAfter,windowJump,neuron)
 %calcula la tasa de disparo de las neuronas disponibles para cada ensayo y
 %lo devuelve como rates
 if nargin < 2
     timeBefore = 2;
     timeAfter = 2;
     windowJump = 0.01; %10 ms window
+    neuron = [];
 elseif nargin < 4
     windowJump = 0.01;
+    neuron = [];
+elseif nargin < 5
+    neuron = [];
 end
 if sign(timeBefore) < 0
     error('timeBefore should go from 0 on');
@@ -22,8 +26,11 @@ rangoMax = timeAfter;
 
 timeConstant = 0.2; %constante de tiempo, de esta depende el suavizado de la tasa de disparo
 %funcion que calcula la tasa de disparo
-
-possibleNeurons = fields(e.spikes);
+if isempty(neuron)
+    possibleNeurons = fields(e.spikes);
+else
+    possibleNeurons{1} = neuron;
+end
 timeSamples = rangoMin:windowJump:rangoMax;
 
 
