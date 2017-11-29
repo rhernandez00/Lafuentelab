@@ -1,4 +1,6 @@
 function [eOut,y] = filterBy(e,filterVar,varsToKeep,simetrical)
+
+signOnly = true;
 if nargin < 4
     simetrical = true;
 end
@@ -15,8 +17,14 @@ for i = 1:length(varsToKeep)
     fil = fil + addToFil;
 end
 indx = find(fil);
-for i = 1:length(indx)
-    y{i,1} = num2str(sign(e.trial(indx(i)).(filterVar)));
+if signOnly
+    for i = 1:length(indx)
+        y{i,1} = num2str(sign(e.trial(indx(i)).(filterVar)));
+    end
+else
+    for i = 1:length(indx)
+        y{i,1} = num2str(e.trial(indx(i)).(filterVar));
+    end
 end
 
 eOut.trial = e.trial(indx);
