@@ -1,7 +1,7 @@
-function [x,y] = getColumn(fileToLoad,neuron,windowIndx,varargin)
+function [x,y,x2,y2] = getColumn(fileToLoad,neuron,windowIndx,varargin)
 %x is a column with the firing rate of windowIndx for each trial, y contains the labels of the trial
 %variableOfTrial denotes the variable used to create the labels in y and
-%the order of the trials, if not enough trials to complete the same number 
+%the order of the trials
 folder = getArgumentValue('folder' ,'C:\Users\Raul\Desktop\registros\recordings\', varargin{:});
 analysisVar = getArgumentValue('analysisVar' ,'anguloInicio', varargin{:});
 varsToKeep = getArgumentValue('varsToKeep' ,[-4,4], varargin{:});
@@ -30,9 +30,14 @@ for trial = 1:nTrials;
     x(trial) = rates.(neuron)(trial).rate(windowIndx);
 end
 
+yVals = sort(unique(y));
+for j = 1:length(yVals)
+    yValsRep(j) = sum(yVals(j)== y);
+end
+maxY = max(yValsRep);
 
-%Gets the same number of trials for each category by creating new rows with
-%a firing rate calculated with the mean of the other trials
-[x,y] = completeTrials(x,y);
-[y,I] = sortInterleave(y);
-x = x(I);
+for j = 1:length(yValsRep)
+    while yValsRep(j) < maxY
+        yVals(j)
+    end
+end 

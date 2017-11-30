@@ -1,9 +1,7 @@
-function [eOut,y] = filterBy(e,filterVar,varsToKeep,simetrical)
-
-signOnly = true;
-if nargin < 4
-    simetrical = true;
-end
+function [eOut,y] = filterBy(e,filterVar,varsToKeep,varargin)
+%filters out trials from e
+simetrical = getArgumentValue('simetrical' ,true, varargin{:});
+signOnly = getArgumentValue('signOnly' ,true, varargin{:});
 
 
 vals = [e.trial.(filterVar)]; vals = round(vals.*10)/10;
@@ -19,11 +17,11 @@ end
 indx = find(fil);
 if signOnly
     for i = 1:length(indx)
-        y{i,1} = num2str(sign(e.trial(indx(i)).(filterVar)));
+        y(i,1) = (sign(e.trial(indx(i)).(filterVar)));
     end
 else
     for i = 1:length(indx)
-        y{i,1} = num2str(e.trial(indx(i)).(filterVar));
+        y(i,1) = (e.trial(indx(i)).(filterVar));
     end
 end
 
