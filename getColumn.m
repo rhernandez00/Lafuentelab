@@ -1,4 +1,4 @@
-function [x,y] = getColumn(fileToLoad,neuron,windowIndx,varargin)
+function [x,y,discard] = getColumn(fileToLoad,neuron,windowIndx,varargin)
 %x is a column with the firing rate of windowIndx for each trial, y contains the labels of the trial
 %variableOfTrial denotes the variable used to create the labels in y and
 %the order of the trials, if not enough trials to complete the same number 
@@ -23,6 +23,7 @@ e = orderBy(e,orderVar);
 if isempty(rates)
     [rates] = getRates(e,timeBefore,timeAfter,windowJump,neuron); %gets the firing rates for each neuron around the alignment event
 end
+[discard] = checkNeuronQuality(rates,neuron);%checks wheter a neuron should be discarded or not
 
 nTrials = length(rates.(neuron));
 x = zeros(nTrials,1);
