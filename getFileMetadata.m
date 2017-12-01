@@ -41,12 +41,13 @@ nTrials = length(e.trial)* ones(length(neuron),1);
 windowIndx = 1;
 discard = zeros(length(neuron),1);
 for j = 1:length(neuron)
-    [x,~,discard(j)] = getColumn(fileName,neuron{1},windowIndx);
+    [x,y,discard(j)] = getColumn(fileName,neuron{j},windowIndx);
 end
-analysisVarTrials = length(x) * ones(length(neuron),1);
+analysisVarTrials = (length(x)/length(unique(y))) * ones(length(neuron),1);
+keep = ~discard;
 
 %assigns the data to a table
 tbl = table(dateRegistered,neuron,coordenadaX,coordenadaY,coordenadaZ,...
     contacto,cortezaX,cortezaY,cortezaZ,...
     orientacion,profundidadX,profundidadY,profundidadZ,...
-    nTrials,monkey,file,analysisVarTrials,discard);
+    nTrials,monkey,file,analysisVarTrials,keep);
