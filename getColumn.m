@@ -1,4 +1,4 @@
-function [x,y,discard] = getColumn(fileToLoad,neuron,windowIndx,varargin)
+function [x,y,discard,windowLength] = getColumn(fileToLoad,neuron,windowIndx,varargin)
 %x is a column with the firing rate of windowIndx for each trial, y contains the labels of the trial
 %variableOfTrial denotes the variable used to create the labels in y and
 %the order of the trials, if not enough trials to complete the same number 
@@ -30,7 +30,7 @@ x = zeros(nTrials,1);
 for trial = 1:nTrials;
     x(trial) = rates.(neuron)(trial).rate(windowIndx);
 end
-
+windowLength = length(rates.(neuron)(trial).rate);
 
 %Gets the same number of trials for each category by creating new rows with
 %a firing rate calculated with the mean of the other trials
