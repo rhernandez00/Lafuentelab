@@ -1,4 +1,4 @@
-function [X,Y,tbl] = getMatrixFromTable(tbl,windowIndx,varargin)
+function [X,Y,tbl,windowLength] = getMatrixFromTable(tbl,windowIndx,varargin)
 %minTrials minimum number of trials for the neuron to be considered
 %nTrials number of trials per condition to be used
 filterVar = getArgumentValue('filterVar' ,'keep', varargin{:});
@@ -17,7 +17,7 @@ Y = [];
 
 fileToLoad = tbl.file{1};
 neuron = tbl.neuron{1};
-[X,Y] = getColumn(fileToLoad,neuron,windowIndx);
+[X,Y,~,windowLength] = getColumn(fileToLoad,neuron,windowIndx);
 Y = Y(1:nTrials);
 X = X(1:nTrials);
 for k = 2:size(tbl,1)
