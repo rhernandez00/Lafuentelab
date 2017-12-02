@@ -32,8 +32,16 @@ cortezaX = e.electrodos.corteza(1) * ones(length(neuron),1);
 cortezaY = e.electrodos.corteza(2) * ones(length(neuron),1);
 cortezaZ = e.electrodos.corteza(3) * ones(length(neuron),1);
 profundidadX = e.electrodos.profundidad(1) * ones(length(neuron),1);
-profundidadY = e.electrodos.profundidad(2) * ones(length(neuron),1);
-profundidadZ = e.electrodos.profundidad(3) * ones(length(neuron),1);
+try 
+    profundidadY = e.electrodos.profundidad(2) * ones(length(neuron),1);
+catch
+    profundidadY = NaN * ones(length(neuron),1);
+end
+try
+    profundidadZ = e.electrodos.profundidad(3) * ones(length(neuron),1);
+catch
+    profundidadZ = NaN * ones(length(neuron),1);
+end
 nTrials = length(e.trial)* ones(length(neuron),1);
 
 
