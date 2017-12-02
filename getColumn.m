@@ -1,4 +1,4 @@
-function [x,y,discard,windowLength] = getColumn(fileToLoad,neuron,windowIndx,varargin)
+function [x,y,discard,windowMax] = getColumn(fileToLoad,neuron,windowIndx,varargin)
 %x is a column with the firing rate of windowIndx for each trial, y contains the labels of the trial
 %variableOfTrial denotes the variable used to create the labels in y and
 %the order of the trials, if not enough trials to complete the same number 
@@ -12,6 +12,7 @@ timeBefore = getArgumentValue('timeBefore' ,1, varargin{:});
 timeAfter = getArgumentValue('timeAfter' ,2, varargin{:});
 rates = getArgumentValue('rates' ,[], varargin{:});
 test = getArgumentValue('test' ,false, varargin{:});
+onlyWindowMax = getArgumentValue('onlyWindowMax' ,false, varargin{:});
 orderVar = analysisVar;
 
 
@@ -23,6 +24,14 @@ e = orderBy(e,orderVar);
 if isempty(rates)
     [rates] = getRates(e,timeBefore,timeAfter,windowJump,neuron); %gets the firing rates for each neuron around the alignment event
 end
+windowMax = length(rates.(neuron)(1).rate);
+if onlyWindowMax
+    x = [];
+    y = [];
+    discard = [];
+    return
+end
+
 [discard] = checkNeuronQuality(rates,neuron);%checks wheter a neuron should be discarded or not
 
 nTrials = length(rates.(neuron));
@@ -30,7 +39,7 @@ x = zeros(nTrials,1);
 for trial = 1:nTrials;
     x(trial) = rates.(neuron)(trial).rate(windowIndx);
 end
-windowLength = length(rates.(neuron)(trial).rate);
+
 
 %Gets the same number of trials for each category by creating new rows with
 %a firing rate calculated with the mean of the other trials
