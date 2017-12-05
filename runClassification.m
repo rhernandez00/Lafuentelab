@@ -4,6 +4,7 @@ function [performance,predictions] = runClassification(X,y,varargin)
 %disponibles en MATLAB, recibe X y . X es una matriz con los features, mientras 
 %que y contiene las etiquetas
 classifier = getArgumentValue('classifier','CSVM',varargin{:});
+kfold = getArgumentValue('kfold',size(X,1)/2,varargin{:});
 
 switch classifier
     case 'CSVM'
@@ -23,6 +24,6 @@ switch classifier
 end
 
 
-CVModel = crossval(model);
+CVModel = crossval(model, 'kfold', kfold);
 predictions = kfoldPredict(CVModel);
 performance = mean(predictions==y);

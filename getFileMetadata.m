@@ -17,8 +17,8 @@ contacto = e.canulas.contacto * ones(length(neuron),1);
 %orientation
 orientacion = cell(length(neuron),1);
 [orientacion{:}] = deal(e.canulas.orientacion); %this function is used to assign
-%one string to various cells
 
+%one string to various cells
 monkey = cell(length(neuron),1);
 [monkey{:}] = deal(fileName(1));
 monkey = categorical(monkey);
@@ -28,6 +28,7 @@ dateRegistered = cell(length(neuron),1);
 file = cell(length(neuron),1);
 [file{:}] = deal(fileName);
 
+%corrdinates
 cortezaX = e.electrodos.corteza(1) * ones(length(neuron),1);
 cortezaY = e.electrodos.corteza(2) * ones(length(neuron),1);
 cortezaZ = e.electrodos.corteza(3) * ones(length(neuron),1);
@@ -42,7 +43,12 @@ try
 catch
     profundidadZ = NaN * ones(length(neuron),1);
 end
+%number of trials
 nTrials = length(e.trial)* ones(length(neuron),1);
+
+%analysisVariable
+ analizedVariable = cell(length(neuron),1);
+[analizedVariable{:}] = deal(analysisVar);
 
 
 %calculates the number of trials for a specific type of analysis var
@@ -58,4 +64,4 @@ keep = ~discard;
 tbl = table(dateRegistered,neuron,coordenadaX,coordenadaY,coordenadaZ,...
     contacto,cortezaX,cortezaY,cortezaZ,...
     orientacion,profundidadX,profundidadY,profundidadZ,...
-    nTrials,monkey,file,analysisVarTrials,keep);
+    nTrials,monkey,file,analizedVariable,analysisVarTrials,keep);

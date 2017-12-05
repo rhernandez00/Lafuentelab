@@ -6,8 +6,9 @@ folder = getArgumentValue('folder' ,'C:\Users\Raul\Desktop\registros\recordings\
 analysisVar = getArgumentValue('analysisVar' ,'anguloInicio', varargin{:});
 varsToKeep = getArgumentValue('varsToKeep' ,[-4,4], varargin{:});
 alignEvent = getArgumentValue('alignEvent' ,'touchIni', varargin{:});
-analysisWindowWidth = getArgumentValue('analysisWindowWidth',10, varargin{:});
-windowJump = getArgumentValue('windowJump' ,0.01, varargin{:});
+windowJump = getArgumentValue('windowJump' ,0.05, varargin{:});
+filterType = getArgumentValue('filterType', 'boxcar', varargin{:});
+timeConstant = getArgumentValue('timeConstant', 0.2, varargin{:});
 timeBefore = getArgumentValue('timeBefore' ,1, varargin{:});
 timeAfter = getArgumentValue('timeAfter' ,2, varargin{:});
 rates = getArgumentValue('rates' ,[], varargin{:});
@@ -22,7 +23,8 @@ e = orderBy(e,orderVar);
 [e,y] = filterBy(e,analysisVar,varsToKeep, 'signOnly', false); %filters e and keeps only the trials that complied with the request
 
 if isempty(rates)
-    [rates] = getRates(e,timeBefore,timeAfter,windowJump,neuron); %gets the firing rates for each neuron around the alignment event
+    [rates] = getRates(e, 'timeBefore',timeBefore, 'timeAfter',timeAfter,...
+        'windowJump',windowJump, 'timeConstant', timeConstant, 'neuron', neuron); %gets the firing rates for each neuron around the alignment event
 end
 windowMax = length(rates.(neuron)(1).rate);
 if onlyWindowMax
