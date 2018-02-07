@@ -1,5 +1,7 @@
 function tbl = getFileMetadata(fileName,varargin)
 % gets metadata from a file and gives it back as a table. One row for each neuron
+% analysisVar: Variable used to partition the data from a neuron recorded.
+% It is the variable used to generate the categories to be classified
 
 % default variables
 analysisVar = getArgumentValue('analysisVar' ,'anguloInicio', varargin{:});
